@@ -1,8 +1,8 @@
 <?php
-    class User {
+    class User extends Database {
         // Parametry Bazy Danych
-        private $conn;
-        private $table = '';
+        //private $conn;
+        private $table = 'users';
 
         // Właściwości Użytkownika
         public $id;
@@ -13,21 +13,22 @@
         public $created_at;
 
         // Konstruktor
-        public function __construct($dbo)
+        public function __construct($db)
         {
-            $this->conn = $dbo;
+            $this->conn = $db;
         }
 
         // Metody GET
-        public function get() {
+        public function read() {
             $query =    'SELECT
                             u.id,
-                            u.group
+                            u.username,
+                            u.name,
+                            u.surname
                         FROM
-                            Users u
+                            '.$this->table.' u
                         ORDER BY
-                            u.id;';
-
+                            u.id ASC';
         }
     }
 ?>

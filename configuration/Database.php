@@ -2,7 +2,7 @@
     class Database {
         // Parametry bazy danych
         private $host       = 'localhost';
-        private $dbname     = 'projektTSW_test';
+        private $dbname     = 'projekttsw_test';
         private $username   = 'root';
         private $password   = '';
         private $conn;
