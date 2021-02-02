@@ -1,1 +1,4 @@
-# TSW_160802_PROJ
+# Projekt z przedmiotu Technologie Sieci Web
+## Wykonał Norbert Solecki
+### 160802
+ 
