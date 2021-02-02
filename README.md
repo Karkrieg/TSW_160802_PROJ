@@ -1,4 +1,4 @@
 # Projekt z przedmiotu Technologie Sieci Web
-## Wykonał Norbert Solecki
-### 160802
+- Wykonał Norbert Solecki
+- 160802
  
