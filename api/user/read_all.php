@@ -46,7 +46,7 @@
     } else {
         // Nie ma użytkowników
         echo json_encode(
-            array('message' => 'No Users Found')
+            array('message' => 'Nie znaleziono użytkowników!')
         );
     }
 ?>

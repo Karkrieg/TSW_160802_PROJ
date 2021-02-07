@@ -28,7 +28,7 @@
                             u.username,
                             u.name,
                             u.surname,
-                            u.email,
+                            u.email
                         FROM
                             '.$this->table.' u
                         ORDER BY

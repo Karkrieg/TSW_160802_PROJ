@@ -7,13 +7,13 @@
     <div class="col-md-6 mx-auto bg-light shadow py-2 border rounded">
         <form action="#" method="post" id="logowanie">
             <div class="form-group bg">
-                <label for="username">Imię</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Nazwa Użytkownika">
+                <label for="username">Nazwa użytkownika</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Nazwa Użytkownika" required>
             </div>
             <hr class="mb-2">
             <div class="form-group">
-                <label for="password">Nazwisko</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Hasło">
+                <label for="password">Hasło</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Hasło" required>
             </div>
             <hr class="mb-2">
             <div class="form-group">
@@ -24,6 +24,7 @@
 </div>
 
 <script>
+    // Stworzenie obiektu javascript
     (function($) {
         $.fn.serializeFormJSON = function() {
 
@@ -47,8 +48,21 @@
         $('#logowanie').submit(function(event) {
             event.preventDefault();
             var data = $(this).serializeFormJSON();
-            console.log(data);
-        })
+            var myJSON = JSON.stringify(data);
+
+            $.ajax({
+                url: "http://localhost/TSW_160802_PROJ/api/authorization/login.php",
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                data: myJSON,
+                success: function(response) {
+                    if(response.success == 1){
+                        window.location.replace('index.php');
+                    } else window.alert(response.message)
+                }
+            });
+        });
     });
 </script>
 

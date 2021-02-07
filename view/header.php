@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -26,14 +30,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a href='users.php' id="user-crud" class="btn btn-outline-light my-2 my-sm-0">Users</a>
-                    </li>
+                    <?php
+                        if(isset($_SESSION['uid']) && $_SESSION['uGroup'] == 'administrator')
+                        {
+                            echo "<a href='users.php' id='user-crud' class='btn btn-outline-light my-2 my-sm-0'>Users</a>";
+                        }
+                    ?>
+
                 </ul>
-                <form class="d-flex">
-                    <a href="user-login.php" class="btn btn-outline-light me-2 my-2 my-sm-0">Logowanie</a>
-                    <a href="user-register.php"  class="btn btn-outline-light my-2 my-sm-0">Rejestracja</a>
-                </form>
+                <div class="d-flex">
+                    <?php
+                        if (isset($_SESSION['uid'])) {
+                            echo '<span class="my-2 text-light me-5">Zalogowano jako:   <b>'.$_SESSION['uName'].'</b></span>';
+                            echo '<a href="../api/authorization/logout.php" class="btn btn-outline-light me-2 my-2 my-sm-0">Wyloguj</a>';
+                        }
+                        else{
+                            echo '<a href="user-login.php" class="btn btn-outline-light me-2 my-2 my-sm-0">Logowanie</a>';
+                            echo '<a href="user-register.php"  class="btn btn-outline-light my-2 my-sm-0">Rejestracja</a>';
+                        };
+                    ?>
+                </div>
             </div>
         </div>
     </nav>
