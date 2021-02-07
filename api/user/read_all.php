@@ -29,9 +29,11 @@
             extract($row);
             $user_item = array(
                 'id' => $id,
+                'grupa' => $grupa,
                 'username' => $username,
                 'name' => $name,
-                'surname' => $surname
+                'surname' => $surname,
+                'email' => $email
             );
             
             // Push to "data"

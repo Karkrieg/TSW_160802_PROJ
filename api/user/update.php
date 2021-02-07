@@ -20,10 +20,11 @@
 
     // Ustawienie id do update
     $user->id = $data->id;
-
+    $user->grupa = $data->grupa;
     $user->username = $data->username;
     $user->name = $data->name;
     $user->surname = $data->surname;
+    $user->email = $data->email;
     $user->password = password_hash($data->password, PASSWORD_DEFAULT);
 
     // Update użytkownika

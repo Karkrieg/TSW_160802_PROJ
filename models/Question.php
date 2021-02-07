@@ -1,15 +1,12 @@
 <?php
-    class User extends Database {
+    class Question extends Database {
         // Parametry Bazy Danych
-        private $table = 'users';
+        //private $conn;
+        private $table = 'questions';
 
         // Właściwości Użytkownika
         public $id;
-        public $grupa;
-        public $name;
-        public $surname;
-        public $email;
-        public $created_at;
+        public $question;
 
         // Konstruktor
         public function __construct($db)
@@ -19,20 +16,16 @@
 
         // Metody 
         
-        // Wczytaj wszystkich użytkowników
+        // Wczytaj wszystkie pytania
         public function read_all() 
         {
             $query =    'SELECT
-                            u.id,
-                            u.grupa,
-                            u.username,
-                            u.name,
-                            u.surname,
-                            u.email,
+                            q.id,
+                            q.question
                         FROM
-                            '.$this->table.' u
+                            '.$this->table.' q
                         ORDER BY
-                            u.id ASC';
+                            q.id ASC';
 
             // Przygotowanie wyrażenia
             $statement = $this->conn->prepare($query);
@@ -43,77 +36,30 @@
             return $statement;
         }
 
-        // Wczytaj pojedynczego użytkownika
-        public function read_single()
-        {
-            $query =    'SELECT
-                            u.id,
-                            u.grupa,
-                            u.username,
-                            u.name,
-                            u.surname,
-                            u.email
-                        FROM
-                            '.$this->table.' u
-                        WHERE
-                            u.id = ?
-                        LIMIT 1';
-
-            // Przygotowanie wyrażenia
-            $statement = $this->conn->prepare($query);
-
-            // Bind id
-            $statement->bindParam(1, $this->id);
-
-            // Wykonanie
-            if($statement->execute()){
-
-            $row = $statement->fetch(PDO::FETCH_ASSOC);
-
-            // Właściwości
-            $this->id = $row['id'];
-            $this->grupa = $row['grupa'];
-            $this->username = $row['username'];
-            $this->name = $row['name'];
-            $this->surname = $row['surname'];
-            $this->email = $row['email'];
-
-            return true;
-            }
-
-            return false;
-        }
-
         // Dodanie użytkownika
         public function create()
         {
             // Query
             $query  =   'INSERT INTO '.$this->table.'
                         SET
-                            grupa = :grupa,
                             username = :username,
                             name = :name,
                             surname = :surname,
-                            email = :email,
                             password = :password';
             
             // Prepare statement
             $statement = $this->conn->prepare($query);
 
             // Security (clean data)
-            $this->grupa = htmlspecialchars(strip_tags($this->grupa));
             $this->username = htmlspecialchars(strip_tags($this->username));
             $this->name = htmlspecialchars(strip_tags($this->name));
             $this->surname = htmlspecialchars(strip_tags($this->surname));
-            $this->email = htmlspecialchars(strip_tags($this->email));
             $this->password = htmlspecialchars(strip_tags($this->password));
 
             // Bind data
-            $statement->bindParam(':grupa', $this->grupa);
             $statement->bindParam(':username', $this->username);
             $statement->bindParam(':name', $this->name);
             $statement->bindParam(':surname', $this->surname);
-            $statement->bindParam(':email', $this->email);
             $statement->bindParam(':password', $this->password);
 
             // Execute
@@ -134,11 +80,9 @@
             // Query
             $query  =   'UPDATE '.$this->table.'
                         SET
-                            grupa = :grupa,
                             username = :username,
                             name = :name,
                             surname = :surname,
-                            email = :email,
                             password = :password
                         WHERE 
                             id = :id';
@@ -149,20 +93,16 @@
 
             // Security (clean data)
             $this->id = htmlspecialchars(strip_tags($this->id));
-            $this->grupa = htmlspecialchars(strip_tags($this->grupa));
             $this->username = htmlspecialchars(strip_tags($this->username));
             $this->name = htmlspecialchars(strip_tags($this->name));
             $this->surname = htmlspecialchars(strip_tags($this->surname));
-            $this->email = htmlspecialchars(strip_tags($this->email));
             $this->password = htmlspecialchars(strip_tags($this->password));
 
             // Bind data
             $statement->bindParam(':id', $this->id);
-            $statement->bindParam(':grupa', $this->grupa);
             $statement->bindParam(':username', $this->username);
             $statement->bindParam(':name', $this->name);
             $statement->bindParam(':surname', $this->surname);
-            $statement->bindParam(':email', $this->email);
             $statement->bindParam(':password', $this->password);
 
             // Execute

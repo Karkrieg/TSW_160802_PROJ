@@ -17,16 +17,22 @@
     $user->id = isset($_GET['id']) ? $_GET['id'] : die();
 
     // Get user
-    $user->read_single();
+    if($user->read_single()){
 
     // Stworzenie tablicy
     $user_arr = array(
         'id' => $user->id,
+        'grupa' => $user->grupa,
         'username' => $user->username,
         'name' => $user->name,
-        'surname' => $user->surname
+        'surname' => $user->surname,
+        'email' => $user->email
     );
 
     // Stwórz JSON
     print_r(json_encode($user_arr));
+    }
+    else {
+        print_r(json_encode(array("message" => "Nie udało się wczytać użytkownika")));
+    }
 ?>
