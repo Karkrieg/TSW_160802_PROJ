@@ -1,4 +1,8 @@
 <?php
+    if ($_SERVER['REQUEST_METHOD'] != 'DELETE') {
+        exit;
+    }
+
     // Header
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');

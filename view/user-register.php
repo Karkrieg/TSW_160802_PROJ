@@ -9,12 +9,8 @@
         <form action="#" method="POST" id="rejestracja">
             <div class="form-group">
                 <label for="grupa">Wydział</label>
-                <select class="form-select" name="grupa" id="group">
-                    <option>Informatyka</option>
-                    <option>Biologia</option>
-                    <option>Chemia</option>
-                    <option>Matematyka</option>
-                    <option>Fizyka</option>
+                <select class="form-select" name="grupa" id="opt-group">
+
                 </select>
             </div>
             <hr class="mb-2">
@@ -51,6 +47,7 @@
 </div>
 
 <script>
+    // Dane z formularza do JSON
     (function($) {
         $.fn.serializeFormJSON = function() {
 
@@ -70,11 +67,36 @@
         };
     })(jQuery);
 
+
     $(document).ready(function() {
+
+        // Ładowanie grup do rozwijanej listy
+        $(document).ready(function() {
+            
+            $.ajax({
+                url: "http://localhost/TSW_160802_PROJ/api/group/read_all.php",
+                method: "post",
+                success: function(response) {
+                    let options = response.data;
+                    let content = "";
+                    console.log(options);
+                    options.forEach(function(row, index, array) {
+                        if(row.id > 2){
+                            content += '<option value="'+row.id+'">'+row.name+'</option>';
+                        }
+                    });
+                    $('#opt-group').html(content);
+                },
+                error: function(xhr,status,err){
+                    console.log(err);
+                }
+            });
+        });
+
         $('#rejestracja').submit(function(event) {
             event.preventDefault();
-            var data = $(this).serializeFormJSON();
-            var myJSON = JSON.stringify(data);
+            let data = $(this).serializeFormJSON();
+            let myJSON = JSON.stringify(data);
             $.ajax({
                 url: "http://localhost/TSW_160802_PROJ/api/user/create.php",
                 method: "post",
@@ -82,7 +104,6 @@
                 contentType: "application/json",
                 data        : myJSON,
                 success: function(response) {
-                    console.log(response);
                     window.alert("Rejestracja przebiegła pomyślnie!");
                     window.location.replace('index.php');
                 }

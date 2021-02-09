@@ -8,50 +8,45 @@
     header('Content-Type: application/json');
 
     include_once '../../configuration/Database.php';
-    include_once '../../models/User.php';
+    include_once '../../models/Group.php';
 
     // Instantiate DB & connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instatniate user object
-    $user = new User($db);
+    // Instatniate group object
+    $group = new Group($db);
 
-    // User query
-    $result = $user->read_all();
+    // group query
+    $result = $group->read_all();
 
     // Ilość wierszy
     $rownum = $result->rowCount();
 
     // Sprawdzenie, czy istnieją jacykolwiek użytkownicy
     if($rownum > 0) {
-        // User array
-        $user_arr = array();
-        $user_arr['data'] = array();
+        // Group array
+        $group_arr = array();
+        $group_arr['data'] = array();
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
-            $user_item = array(
+            $group_item = array(
                 'id' => $id,
-                'gid' => $gid,
-                'grupa' => $grupa,
-                'username' => $username,
-                'name' => $name,
-                'surname' => $surname,
-                'email' => $email
+                'name' => $name
             );
             
-            // Push to "data"
-            array_push($user_arr['data'], $user_item);
+            // Push do "data"
+            array_push($group_arr['data'], $group_item);
         }
 
-        // Turn to JSON
-        echo json_encode($user_arr);
+        // Zmień na JSON
+        echo json_encode($group_arr);
 
     } else {
         // Nie ma użytkowników
         echo json_encode(
-            array('message' => 'Nie znaleziono użytkowników!')
+            array('message' => 'Nie znaleziono grup!')
         );
     }
 ?>

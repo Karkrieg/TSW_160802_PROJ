@@ -49,7 +49,7 @@
             event.preventDefault();
             var data = $(this).serializeFormJSON();
             var myJSON = JSON.stringify(data);
-
+            console.log(myJSON);
             $.ajax({
                 url: "http://localhost/TSW_160802_PROJ/api/authorization/login.php",
                 method: "POST",

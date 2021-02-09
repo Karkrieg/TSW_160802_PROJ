@@ -38,7 +38,7 @@
     else{
         // Usunięcie spacji
         $username = trim($data->username);
-        $password = trim($data->password);    
+        //$password = trim($data->password);    
         
         // Logowanie
             try{
@@ -60,12 +60,12 @@
                         $returnData = [
                             'success' => 1,
                             'message' => 'Zalogowałes się!',
-                            'group' => $row['grupa']
+                            'grupa' => $row['gid']
                         ];
                         session_start();
                         $_SESSION['uid'] = $row['id'];
                         $_SESSION['uName'] = $row['username'];
-                        $_SESSION['uGroup'] = $row['grupa'];
+                        $_SESSION['uGroup'] = $row['gid'];
                     }
                     // Jeśli podane zostało błędne hasło
                     else{

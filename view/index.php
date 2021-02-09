@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div id="inside">
                     <h2 class="text-center">Dane administratora</h2>
-                    <p><b>Login:</b>  Adicz </br>
+                    <p><b>Login:</b>  Admin </br>
                     <b>Hasło:</b>  123</p>
                 </div>
             </div>

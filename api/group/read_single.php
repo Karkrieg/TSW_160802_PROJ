@@ -9,33 +9,29 @@
     header('Content-Type: application/json');
 
     include_once '../../configuration/Database.php';
-    include_once '../../models/User.php';
+    include_once '../../models/Group.php';
 
     // Instantiate DB & connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instatniate user object
-    $user = new User($db);
+    // Instatniate group object
+    $group = new Group($db);
 
     // Get id
-    $user->id = isset($_GET['id']) ? $_GET['id'] : die();
+    $group->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    // Get user
-    if($user->read_single()){
+    // Get group
+    if($group->read_single()){
 
     // Stworzenie tablicy
-    $user_arr = array(
-        'id' => $user->id,
-        'grupa' => $user->grupa,
-        'username' => $user->username,
-        'name' => $user->name,
-        'surname' => $user->surname,
-        'email' => $user->email
+    $group_arr = array(
+        'id' => $group->id,
+        'name' => $group->name,
     );
 
     // Stwórz JSON
-    print_r(json_encode($user_arr));
+    print_r(json_encode($group_arr));
     }
     else {
         print_r(json_encode(array("message" => "Nie udało się wczytać użytkownika")));
