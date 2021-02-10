@@ -1,23 +1,19 @@
 <?php include_once 'header.php'; ?>
 
-<div class="row m-5 py-5 bg-light shadow rounded">
-    <div class="col-md-12">
-        <h2 class="text-center">Formularz Logowania</h2>
-    </div>
+<div class="row m-5 py-5">
     <div class="col-md-6 mx-auto bg-light shadow py-2 border rounded">
-        <form action="#" method="post" id="logowanie">
-            <div class="form-group bg">
-                <label for="username">Nazwa użytkownika</label>
+    <h2 class="text-center">Formularz Logowania</h2>
+        <form action="#" method="post" id="logowanie" class="px-4 pb-4">
+            <div class="form-floating mb-3 mt-3">
                 <input type="text" name="username" class="form-control" id="username" placeholder="Nazwa Użytkownika" required>
+                <label for="username">Nazwa użytkownika</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="password">Hasło</label>
+            <div class="form-floating mb-3">
                 <input type="password" name="password" class="form-control" id="password" placeholder="Hasło" required>
+                <label for="password">Hasło</label>
             </div>
-            <hr class="mb-2">
             <div class="form-group">
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                <button type="submit" class="btn btn-success mt-2 w-100">Zaloguj się</button>
             </div>
         </form>
     </div>
@@ -49,7 +45,7 @@
             event.preventDefault();
             var data = $(this).serializeFormJSON();
             var myJSON = JSON.stringify(data);
-            console.log(myJSON);
+            //console.log(myJSON);
             $.ajax({
                 url: "http://localhost/TSW_160802_PROJ/api/authorization/login.php",
                 method: "POST",
@@ -57,7 +53,7 @@
                 contentType: "application/json; charset=UTF-8",
                 data: myJSON,
                 success: function(response) {
-                    if(response.success == 1){
+                    if (response.success == 1) {
                         window.location.replace('index.php');
                     } else window.alert(response.message)
                 }

@@ -1,13 +1,22 @@
 <?php include_once 'header.php'; ?>
+<?php if (!isset($_SESSION['uid'])) {
+    echo '<h2 class="text-center bg-danger my-5 py-5">NIE JESTEŚ ZALOGOWANY!</h2>';
+    exit();
+}
+if ($_SESSION['uGroup'] > 2) {
+    echo '<h2 class="text-center bg-danger my-5 py-5">JESTEŚ STUDENTEM :(</h2>';
+    exit();
+}
+?>
 
-        <div class="row">
-            <div class="col-lg-12">
-            <h1 class="text-center mt-2">Grupy</h1>
-                <div id="inside">
-                    
-                </div>
-            </div>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="text-center mt-2">Grupy</h1>
+        <div id="inside">
+
         </div>
+    </div>
+</div>
 
 <?php include_once 'footer.php'; ?>
 
@@ -20,9 +29,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="grupa">Grupa</label>
+                    <div class="form-floating mb-3 mt-3">
                         <input type="text" name="name" class="form-control" id="grupa" placeholder="Grupa" required>
+                        <label for="grupa">Grupa</label>
                     </div>
                 </div>
                 <div class="modal-footer border">
@@ -43,9 +52,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="egrupa">Grupa</label>
+                    <div class="form-floating mb-3 mt-3">
                         <input type="text" name="name" class="form-control" id="egrupa" placeholder="Grupa" />
+                        <label for="egrupa">Grupa</label>
                     </div>
                 </div>
                 <div class="modal-footer border">
@@ -115,7 +124,7 @@
                             '<th scope="row">' + ++i + '</th>' +
                             '<td>' + row.name + '</td>' +
                             '<td>';
-                        if(row.id > 2) {
+                        if (row.id > 2) {
                             content += '<button type="button" name="edit" class="btn me-2 btn-primary btn-xs edit" id="' + row.id + '">Edytuj' +
                                 '</button>' +
                                 '<button type="button" name="delete" class="btn btn-danger btn-xs delete" id="' + row.id + '">Usuń' +
@@ -185,7 +194,7 @@
                 data: myJSON,
                 success: function(response) {
                     //window.alert("Poprawnie dodano grupę!");
-                    //window.alert(response.message);
+                    window.alert(response.message);
                     $('#modal_action').modal('hide');
                     show();
                 },
@@ -210,7 +219,7 @@
                 data: myJSON,
                 success: function(response) {
                     //window.alert("Poprawnie edytowano użytkownika!");
-                    //window.alert(response.message);
+                    window.alert(response.message);
                     $('#modal_reaction').modal('hide');
                     show();
                 },

@@ -11,7 +11,7 @@ if ($_SESSION['uGroup'] > 2) {
 
 <div class="row">
     <div class="col-lg-12">
-    <h1 class="text-center mt-2">Użytkownicy</h1>
+        <h1 class="text-center mt-2">Użytkownicy</h1>
         <div id="inside">
 
         </div>
@@ -29,39 +29,34 @@ if ($_SESSION['uGroup'] > 2) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="opt-group">Grupa</label>
+                    <div class="form-floating mb-3 mt-3">
                         <select class="form-select" name="grupa" id="opt-group">
                         </select>
+                        <label for="opt-group">Grupa</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="name">Imię</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="name" class="form-control" id="name" placeholder="Imię" required>
+                        <label for="name">Imię</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="surname">Nazwisko</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="surname" class="form-control" id="surname" placeholder="Nazwisko" required>
+                        <label for="surname">Nazwisko</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="username">Nazwa Użytkownika</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="username" class="form-control" id="username" placeholder="Nazwa Użytkownika" required>
+                        <label for="username">Nazwa Użytkownika</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="email">Email</label>
+                    <div class="form-floating mb-3">
                         <input type="email" name="email" class="form-control" id="email" placeholder="user@mail.com" required>
+                        <label for="email">Email</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="password">Hasło</label>
+                    <div class="form-floating mb-3">
                         <input type="password" name="password" class="form-control" id="password" placeholder="Hasło" required>
+                        <label for="password">Hasło</label>
                     </div>
                 </div>
                 <div class="modal-footer border">
-                    <input type="button" class="btn mx-auto btn-danger w-50" data-dismiss="modal" value="Anuluj" />
+                    <input type="button" class="btn mx-auto btn-danger w-50" data-bs-dismiss="modal" value="Anuluj" />
                     <input type="submit" class="btn mx-auto w-50 btn-success" name="btn-clk" id="btn-clk" value="Dodaj" />
                 </div>
             </form>
@@ -79,40 +74,35 @@ if ($_SESSION['uGroup'] > 2) {
                 </div>
                 <div class="modal-body">
                     <div id="list1">
-                        <div class="form-group">
-                            <label for="opt-group2">Grupa</label>
+                        <div class="form-floating mb-3 mt-3">
                             <select class="form-select" name="grupa" id="opt-group2">
                             </select>
+                            <label for="opt-group2">Grupa</label>
                         </div>
-                        <hr class="mb-2">
                     </div>
-                    <div class="form-group">
-                        <label for="ename">Imię</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="name" class="form-control" id="ename" placeholder="Imię" />
+                        <label for="ename">Imię</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="esurname">Nazwisko</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="surname" class="form-control" id="esurname" placeholder="Nazwisko" />
+                        <label for="esurname">Nazwisko</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="eusername">Nazwa Użytkownika</label>
+                    <div class="form-floating mb-3">
                         <input type="text" name="username" class="form-control" id="eusername" placeholder="Nazwa Użytkownika" />
+                        <label for="eusername">Nazwa Użytkownika</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="eemail">Email</label>
+                    <div class="form-floating mb-3">
                         <input type="email" name="email" class="form-control" id="eemail" placeholder="user@mail.com" />
+                        <label for="eemail">Email</label>
                     </div>
-                    <hr class="mb-2">
-                    <div class="form-group">
-                        <label for="epassword">Hasło</label>
+                    <div class="form-floating mb-3">
                         <input type="password" name="password" class="form-control" id="epassword" placeholder="Hasło" />
+                        <label for="epassword">Hasło</label>
                     </div>
                 </div>
                 <div class="modal-footer border">
-                    <input type="button" class="btn mx-auto btn-danger w-50" data-dismiss="modal" value="Anuluj" />
+                    <input type="button" class="btn mx-auto btn-danger w-50" data-bs-dismiss="modal" value="Anuluj" />
                     <input type="submit" class="btn mx-auto w-50 btn-success" name="btn-clk" id="ebtn-clk" value="Edytuj" />
                 </div>
             </form>
@@ -263,13 +253,13 @@ if ($_SESSION['uGroup'] > 2) {
             $('#modal_reaction').modal('show');
             let idi = $(this).attr("id");
             curr_id = idi;
-           if(curr_id == 1){
-               $('#opt-group2').val('1');
-               $('#list1').hide();
-           } else{
-               $('#list1').show();
-           }
-            
+            if (curr_id == 1) {
+                $('#opt-group2').val('1');
+                $('#list1').hide();
+            } else {
+                $('#list1').show();
+            }
+
         });
 
         // CREATE
@@ -334,7 +324,7 @@ if ($_SESSION['uGroup'] > 2) {
                 success: function(response) {
                     let options = response.data;
                     let content = "";
-                   // console.log(options);
+                    // console.log(options);
                     options.forEach(function(row, index, array) {
                         if (row.id > 2 || (<?php echo $_SESSION['uGroup'] ?> == 1 && row.id != 1)) {
                             content += '<option value="' + row.id + '">' + row.name + '</option>';

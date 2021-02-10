@@ -38,7 +38,7 @@
     else{
         // Usunięcie spacji
         $username = trim($data->username);
-        //$password = trim($data->password);    
+        $password = trim($data->password);    
         
         // Logowanie
             try{

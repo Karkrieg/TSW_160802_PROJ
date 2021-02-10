@@ -104,7 +104,7 @@
             // Query
             $query  =   'UPDATE '.$this->table.'
                         SET
-                            name = :name,
+                            name = :name
                         WHERE 
                             id = :id';
 

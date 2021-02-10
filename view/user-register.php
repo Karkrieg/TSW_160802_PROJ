@@ -1,46 +1,38 @@
 <?php define('MyConst', TRUE); ?>
 <?php include_once 'header.php'; ?>
 
-<div class="row m-5 py-5 bg-light shadow rounded">
-    <div class="col-md-12">
-        <h2 class="text-center">Formularz Rejestracji</h2>
-    </div>
+<div class="row m-5 pb-5">
     <div class="col-md-6 mx-auto bg-light shadow py-2 border rounded">
-        <form action="#" method="POST" id="rejestracja">
-            <div class="form-group">
-                <label for="grupa">Wydział</label>
+        <h2 class="text-center">Formularz Rejestracji</h2>
+        <form action="#" method="POST" id="rejestracja" class="px-4 pb-4">
+            <div class="form-floating mb-3 mt-3">
                 <select class="form-select" name="grupa" id="opt-group">
 
                 </select>
+                <label for="grupa">Wydział</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="name">Imię</label>
+            <div class="form-floating mb-3">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Imię" required>
+                <label for="name">Imię</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="surname">Nazwisko</label>
+            <div class="form-floating mb-3">
                 <input type="text" name="surname" class="form-control" id="surname" placeholder="Nazwisko" required>
+                <label for="surname">Nazwisko</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="username">Nazwa Użytkownika</label>
+            <div class="form-floating mb-3">
                 <input type="text" name="username" class="form-control" id="username" placeholder="Nazwa Użytkownika" required>
+                <label for="username">Nazwa Użytkownika</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="email">Email</label>
+            <div class="form-floating mb-3">
                 <input type="email" name="email" class="form-control" id="email" placeholder="user@mail.com" required>
+                <label for="email">Email</label>
             </div>
-            <hr class="mb-2">
-            <div class="form-group">
-                <label for="password">Hasło</label>
+            <div class="form-floating mb-3">
                 <input type="password" name="password" class="form-control" id="password" placeholder="Hasło" required>
+                <label for="password">Hasło</label>
             </div>
-            <hr class="mb-2">
             <div class="form-group">
-                <button type="submit" class="btn btn-primary mt-2 w-100">Submit</button>
+                <button type="submit" class="btn btn-success mt-2 w-100">Zarejestruj się</button>
             </div>
         </form>
     </div>
@@ -72,7 +64,7 @@
 
         // Ładowanie grup do rozwijanej listy
         $(document).ready(function() {
-            
+
             $.ajax({
                 url: "http://localhost/TSW_160802_PROJ/api/group/read_all.php",
                 method: "post",
@@ -81,13 +73,13 @@
                     let content = "";
                     console.log(options);
                     options.forEach(function(row, index, array) {
-                        if(row.id > 2){
-                            content += '<option value="'+row.id+'">'+row.name+'</option>';
+                        if (row.id > 2) {
+                            content += '<option value="' + row.id + '">' + row.name + '</option>';
                         }
                     });
                     $('#opt-group').html(content);
                 },
-                error: function(xhr,status,err){
+                error: function(xhr, status, err) {
                     console.log(err);
                 }
             });
@@ -102,7 +94,7 @@
                 method: "post",
                 dataType: "json",
                 contentType: "application/json",
-                data        : myJSON,
+                data: myJSON,
                 success: function(response) {
                     window.alert("Rejestracja przebiegła pomyślnie!");
                     window.location.replace('index.php');
