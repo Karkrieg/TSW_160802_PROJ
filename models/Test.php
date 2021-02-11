@@ -1,12 +1,14 @@
 <?php
-    class Question extends Database {
+    class Test extends Database {
         // Parametry Bazy Danych
         //private $conn;
-        private $table = 'questions';
+        private $table = 'tests';
 
-        // Właściwości Użytkownika
+        // Właściwości Testu
         public $id;
-        public $question;
+        public $gid;
+        public $tytul;
+        public $pytania;
 
         // Konstruktor
         public function __construct($db)
@@ -20,12 +22,14 @@
         public function read_all() 
         {
             $query =    'SELECT
-                            q.id,
-                            q.question
+                            t.id,
+                            t.gid,
+                            t.tytul,
+                            t.pytania
                         FROM
-                            '.$this->table.' q
+                            '.$this->table.' t
                         ORDER BY
-                            q.id ASC';
+                            t.id ASC';
 
             // Przygotowanie wyrażenia
             $statement = $this->conn->prepare($query);
@@ -42,25 +46,22 @@
             // Query
             $query  =   'INSERT INTO '.$this->table.'
                         SET
-                            username = :username,
-                            name = :name,
-                            surname = :surname,
-                            password = :password';
+                            gid = :gid,
+                            tytul = :tytul,
+                            pytania = :pytania';
             
             // Prepare statement
             $statement = $this->conn->prepare($query);
 
             // Security (clean data)
-            $this->username = htmlspecialchars(strip_tags($this->username));
-            $this->name = htmlspecialchars(strip_tags($this->name));
-            $this->surname = htmlspecialchars(strip_tags($this->surname));
-            $this->password = htmlspecialchars(strip_tags($this->password));
+            $this->gid = htmlspecialchars(strip_tags($this->gid));
+            $this->tytul = htmlspecialchars(strip_tags($this->tytul));
+            $this->pytania = $this->pytania;
 
             // Bind data
-            $statement->bindParam(':username', $this->username);
-            $statement->bindParam(':name', $this->name);
-            $statement->bindParam(':surname', $this->surname);
-            $statement->bindParam(':password', $this->password);
+            $statement->bindParam(':gid', $this->gid);
+            $statement->bindParam(':tytul', $this->tytul);
+            $statement->bindParam(':pytania', $this->pytania);
 
             // Execute
             if($statement->execute()) {
@@ -74,16 +75,13 @@
         }
 
 
-        // Update użytkownika
+        // Update testu
         public function update()
         {
             // Query
             $query  =   'UPDATE '.$this->table.'
                         SET
-                            username = :username,
-                            name = :name,
-                            surname = :surname,
-                            password = :password
+                            name = :name
                         WHERE 
                             id = :id';
 
@@ -93,17 +91,11 @@
 
             // Security (clean data)
             $this->id = htmlspecialchars(strip_tags($this->id));
-            $this->username = htmlspecialchars(strip_tags($this->username));
             $this->name = htmlspecialchars(strip_tags($this->name));
-            $this->surname = htmlspecialchars(strip_tags($this->surname));
-            $this->password = htmlspecialchars(strip_tags($this->password));
 
             // Bind data
             $statement->bindParam(':id', $this->id);
-            $statement->bindParam(':username', $this->username);
             $statement->bindParam(':name', $this->name);
-            $statement->bindParam(':surname', $this->surname);
-            $statement->bindParam(':password', $this->password);
 
             // Execute
             if($statement->execute()) {
@@ -116,7 +108,7 @@
             return false;
         }
 
-        // Usunięcie użytkownika
+        // Usunięcie grupy
         public function delete()
         {
             // Query

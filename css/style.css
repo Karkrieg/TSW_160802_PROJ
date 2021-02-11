@@ -1,15 +1,15 @@
 body{
     height: 100%;
-    background-color: grey;
 }
 
 html{
     height: 100%;
+    overflow-y: scroll;
+    background-color: whitesmoke;
 }
 
 #wrap{
     height: 100%;
-    overflow: auto;
     background-color: whitesmoke;
 }
 

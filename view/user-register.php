@@ -71,7 +71,7 @@
                 success: function(response) {
                     let options = response.data;
                     let content = "";
-                    console.log(options);
+                    //console.log(options);
                     options.forEach(function(row, index, array) {
                         if (row.id > 2) {
                             content += '<option value="' + row.id + '">' + row.name + '</option>';
