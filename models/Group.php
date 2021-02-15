@@ -45,7 +45,7 @@
                          FROM
                              '.$this->table.' g
                          WHERE
-                             u.id = ?
+                             g.id = ?
                          LIMIT 1';
  
              // Przygotowanie wyrażenia
@@ -57,6 +57,9 @@
              // Wykonanie
              if($statement->execute()){
  
+            // Jeśli istnieje test o podanym id
+            if ($statement->rowCount()) {
+
              $row = $statement->fetch(PDO::FETCH_ASSOC);
  
              // Właściwości
@@ -65,7 +68,7 @@
  
              return true;
              }
- 
+            }
              return false;
          }
 

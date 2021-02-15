@@ -1,5 +1,11 @@
 <?php
 
+// if (!isset($_SESSION['uid'])) {
+//     echo '<h2>NIE JESTEŚ ZALOGOWANY!</h2>';
+//     exit();
+// }
+
+
     if ($_SERVER['REQUEST_METHOD'] != 'GET') {
         exit;
     }

@@ -26,17 +26,18 @@ session_start();
     <nav class="px-4 sticky-top navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">QUIZ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <div class="dropdown d-flex">
                     <?php
                     if (isset($_SESSION['uid']) && $_SESSION['uGroup'] <= 2) {
-                        echo '<a class="btn btn-outline-light dropdown-toggle my-2 my-sm-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tabele</a>';
+                        echo '<a class="btn btn-outline-light dropdown-toggle my-2 " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tabele</a>';
                         echo '<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">';
-                        echo "<li><a href='users.php' id='user-crud' class='dropdown-item  my-2 my-sm-0'>Użytkownicy</a></li>";
-                        echo "<li><a href='groups.php' id='group-crud' class='dropdown-item my-2 my-sm-0'>Grupy</a></li>";
+                        echo "<li><a href='users.php' id='user-crud' class='dropdown-item  my-2 '>Użytkownicy</a></li>";
+                        echo "<li><a href='groups.php' id='group-crud' class='dropdown-item my-2 '>Grupy</a></li>";
+                        echo "<li><a href='tests.php' id='test-crud' class='dropdown-item my-2 '>Testy</a></li>";
                         echo '</ul>';
                     }
                     ?>
@@ -44,9 +45,11 @@ session_start();
                 <div class="dropdown d-flex">
                     <?php
                     if (isset($_SESSION['uid'])) {
-                        echo '<a class="btn btn-outline-light dropdown-toggle ms-2 my-2 my-sm-0" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Panel testów</a>';
+                        echo '<a class="btn btn-outline-light dropdown-toggle me-auto mt-2 my-sm-0" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">Panel testów</a>';
                         echo '<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown2">';
-                        echo "<li><a href='test-creator.php' id='test-question-nav' class='dropdown-item my-2 my-sm-0'>Stwórz nowy test</a></li>";
+                        if($_SESSION['uGroup'] < 3)
+                            echo "<li><a href='test-creator.php' id='test-question-nav' class='dropdown-item my-2'>Stwórz nowy test</a></li>";
+                        echo "<li><a href='available-tests.php' id='test-question-student' class='dropdown-item my-2'>Dostępne testy</a></li>";
                         echo '</ul>';
                     }
                     ?>

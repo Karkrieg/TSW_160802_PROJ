@@ -1,4 +1,10 @@
 <?php
+
+// if (!isset($_SESSION['uid'])) {
+//     echo '<h2>NIE JESTEŚ ZALOGOWANY!</h2>';
+//     exit();
+// }
+
     if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         exit;
     }
@@ -34,8 +40,9 @@
             $test_item = array(
                 'id' => $id,
                 'gid' => $gid,
+                'grupa' => $grupa,
                 'tytul' => $tytul,
-                'pytania' => json_decode($pytania)
+                'dane' => json_decode($dane)
             );
             
             // Push do "data"

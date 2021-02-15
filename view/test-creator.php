@@ -24,7 +24,7 @@ if ($_SESSION['uGroup'] > 2) {
                 <hr class="mb-2">
 
                 <div class="form-group mb-3">
-                    <label for="grupa">Wydział</label>
+                    <label for="grupa">Grupa</label>
                     <select class="form-select" name="grupa" id="opt-group">
                         <!-- Wnętrze -->
                     </select>
@@ -62,7 +62,14 @@ if ($_SESSION['uGroup'] > 2) {
             <div class="w-100" id="obr-div">
                 <img src="" id="preview" class="img-fluid mt-3 mx-auto d-block" alt="obraz">
             </div>
+
             <hr class="mb-2">
+
+            <div class="form-group text-center">
+                <label for="punkty">Liczba punktów za pytanie</label>
+                <input type="number" min="0" max="10" class="form-control w-25 mx-auto" name="punkty" required>
+            </div>
+
 
             <hr class="mb-2">
 
@@ -105,6 +112,7 @@ if ($_SESSION['uGroup'] > 2) {
         tytul: "",
         gid: 0,
         l_elem: 0,
+        max_pkt: 0,
         pytania: []
     };
     const pytanie = {};
@@ -169,7 +177,7 @@ if ($_SESSION['uGroup'] > 2) {
 
     $(document).ready(function() {
         $('#obr-div').hide();
-       // $('#obr-div').removeClass('invisible');
+        // $('#obr-div').removeClass('invisible');
 
         // Pokazanie załadowanego obrazu
         $('#obraz').change(function(e) {
@@ -197,6 +205,8 @@ if ($_SESSION['uGroup'] > 2) {
             event.preventDefault();
             let buttonType = $(this).attr('value');
             //console.log(buttonType);
+
+            // ZATWIERDŹ PYTANIE
             if (buttonType == 'next') {
 
                 //pytanie.id = '2a';
@@ -219,14 +229,19 @@ if ($_SESSION['uGroup'] > 2) {
                     let data = $('#pytanie-test').serializeFormJSON();
                     pytanie.typ = data['typ'];
                     pytanie.tresc = data['tresc'];
+                    pytanie.punkty = data['punkty'];
+
                     // 1-krotne dodanie danych ogólnych o teście
                     if (test.l_elem == 0) {
                         test.tytul = data['tytul'];
                         test.gid = data['grupa'];
                         delete data.tytul, data.grupa;
                     }
+                    // usunięcie grupy i treści z 'data'
                     delete data.grupa, data.tresc;
+                    // Inkrementacja licznika elementów i punktów
                     test.l_elem += 1;
+                    test.max_pkt += parseInt(pytanie.punkty);
                     //console.log(data);
                     if (pytanie.hasOwnProperty('image')) {
                         data.obraz = pytanie.image;
@@ -238,7 +253,7 @@ if ($_SESSION['uGroup'] > 2) {
                             data
                         });
                     }
-                    //console.log(test);
+                    console.log(test);
                     //let myJSON = JSON.stringify(test);
                     //console.log(myJSON);
                     $('#znikacz').remove();
@@ -250,7 +265,7 @@ if ($_SESSION['uGroup'] > 2) {
                     delete pytanie.image, data.obraz;
                 }
 
-
+                // ZAPISZ TEST
             } else if (buttonType == 'save' && test.l_elem >= 1) {
                 //console.log("SAVE");
                 //let data = $(this).serializeFormJSON();
@@ -266,15 +281,15 @@ if ($_SESSION['uGroup'] > 2) {
                     data: myJSON,
                     success: function(response) {
                         window.alert(response.message);
-                        window.location.replace('index.php');
+                        window.location.replace('tests.php');
                     },
-                    error: function(xhr,stat,err){
-                        console.log(xhr,stat,err);
+                    error: function(xhr, stat, err) {
+                        console.log(xhr, stat, err);
                     }
                 });
-            }else{
+            } else {
                 window.alert("Próbujesz zapisać pusty test!");
-             }
+            }
         });
 
 
@@ -307,9 +322,9 @@ if ($_SESSION['uGroup'] > 2) {
             let content = "";
             //console.log(typ);
             if (typ == 1) {
-                content += '<div class="d-flex mb-4"><input type="radio" class="btn-check" value="1" name="pf" id="success-outlined" required>' +
+                content += '<div class="d-flex mb-4"><input type="radio" class="btn-check" value="1" name="odpowiedz" id="success-outlined" required>' +
                     '<label class="btn btn-outline-success me-auto w-25" for="success-outlined">PRAWDA</label>' +
-                    '<input type="radio" class="btn-check" value="0" name="pf" id="danger-outlined" >' +
+                    '<input type="radio" class="btn-check" value="0" name="odpowiedz" id="danger-outlined" >' +
                     '<label class="btn btn-outline-danger ms-auto w-25" for="danger-outlined">FAŁSZ</label></div><hr class="mb-2">';
 
             } else if (typ >= 2 && typ <= 6) {
@@ -326,4 +341,6 @@ if ($_SESSION['uGroup'] > 2) {
         });
 
     });
+    // zmiana pf na odpowiedz
 </script>
+

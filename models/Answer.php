@@ -1,14 +1,19 @@
 <?php
-class Test extends Database
+class Answer extends Database
 {
     // Parametry Bazy Danych
     //private $conn;
-    private $table = 'tests';
+    private $table = 'answers';
 
-    // Właściwości Testu
+    // Właściwości odpowiedzi
     public $id;
+    public $tid;
     public $gid;
+    public $uid;
     public $tytul;
+    public $start;
+    public $stop;
+    public $points;
     public $dane;
 
     // Konstruktor
@@ -19,20 +24,28 @@ class Test extends Database
 
     // Metody 
 
-    // Wczytaj wszystkie testy
+    // Wczytaj wszystkie odpowiedzi
     public function read_all()
     {
         $query =    'SELECT
-                            t.id,
-                            t.gid,
+                            a.id,
+                            a.tid,
+                            a.gid,
+                            a.uid;
+                            t.tytul as tytul,
                             g.name as grupa,
-                            t.tytul,
-                            t.dane
+                            u.username as username,
+                            a.tytul,
+                            a.start,
+                            a.stop,
+                            a.dane
                         FROM
-                            ' . $this->table . ' t
-                        LEFT JOIN groups g ON g.id = t.gid
+                            ' . $this->table . ' a
+                        LEFT JOIN groups g ON g.id = a.gid
+                        LEFT JOIN tests t ON t.id = a.tid
+                        LEFT JOIN users u ON u.id = a.uid
                         ORDER BY
-                            t.id ASC';
+                            a.stop DESC';
 
         // Przygotowanie wyrażenia
         $statement = $this->conn->prepare($query);
@@ -43,18 +56,27 @@ class Test extends Database
         return $statement;
     }
 
-    // Wczytaj pojedynczy test
+    // Wczytaj pojedynczą odpowiedź
     public function read_single()
     {
         $query =    'SELECT
-                            t.id,
-                            t.gid,
-                            t.tytul,
-                            t.dane
+                            a.id,
+                            a.tid,
+                            a.gid,
+                            a.uid;
+                            t.tytul as tytul,
+                            g.name as grupa,
+                            u.username as username,
+                            a.start,
+                            a.stop,
+                            a.dane
                         FROM
-                            ' . $this->table . ' t
+                            ' . $this->table . ' a
+                            LEFT JOIN groups g ON g.id = a.gid
+                            LEFT JOIN tests t ON t.id = a.tid
+                            LEFT JOIN users u ON u.id = a.uid
                         WHERE
-                            t.id = ?
+                            a.id = ?
                         LIMIT 1';
 
         // Przygotowanie wyrażenia
@@ -66,14 +88,16 @@ class Test extends Database
         // Wykonanie
         if ($statement->execute()) {
 
-            // Jeśli istnieje test o podanym id
+            // Jeśli istnieje odpowiedź o podanym id
             if ($statement->rowCount()) {
                 $row = $statement->fetch(PDO::FETCH_ASSOC);
 
                 // Właściwości
                 $this->id = $row['id'];
+                $this->tid = $row['tid'];
                 $this->gid = $row['gid'];
-                $this->tytul = $row['tytul'];
+                $this->uid = $row['uid'];
+                $this->start = $row['start'];
                 $this->dane = $row['dane'];
 
                 return true;
@@ -82,27 +106,33 @@ class Test extends Database
         return false;
     }
 
-    // Dodanie użytkownika
+    // Dodanie odpowiedzi
     public function create()
     {
         // Query
         $query  =   'INSERT INTO ' . $this->table . '
                         SET
+                            tid = :tid,
                             gid = :gid,
-                            tytul = :tytul,
+                            uid = :uid,
+                            start = :start,
                             dane = :dane';
 
         // Prepare statement
         $statement = $this->conn->prepare($query);
 
         // Security (clean data)
+        $this->tid = htmlspecialchars(strip_tags($this->tid));
         $this->gid = htmlspecialchars(strip_tags($this->gid));
-        $this->tytul = htmlspecialchars(strip_tags($this->tytul));
+        $this->uid = htmlspecialchars(strip_tags($this->uid));
+        $this->start = htmlspecialchars(strip_tags($this->start));
         $this->dane = $this->dane;
 
         // Bind data
+        $statement->bindParam(':tid', $this->tid);
         $statement->bindParam(':gid', $this->gid);
-        $statement->bindParam(':tytul', $this->tytul);
+        $statement->bindParam(':uid', $this->uid);
+        $statement->bindParam(':start', $this->start);
         $statement->bindParam(':dane', $this->dane);
 
         // Execute
@@ -117,14 +147,16 @@ class Test extends Database
     }
 
 
-    // Update testu
+    // Update odpowiedzi
     public function update()
     {
         // Query
         $query  =   'UPDATE ' . $this->table . '
                         SET
+                            tid = :tid,
                             gid = :gid,
-                            tytul = :tytul,
+                            uid = :uid,
+                            start = :start,
                             dane = :dane
                         WHERE 
                             id = :id';
@@ -134,15 +166,17 @@ class Test extends Database
         $statement = $this->conn->prepare($query);
 
         // Security (clean data)
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->tid = htmlspecialchars(strip_tags($this->tid));
         $this->gid = htmlspecialchars(strip_tags($this->gid));
-        $this->tytul = htmlspecialchars(strip_tags($this->tytul));
+        $this->uid = htmlspecialchars(strip_tags($this->uid));
+        $this->start = htmlspecialchars(strip_tags($this->start));
         $this->dane = $this->dane;
 
         // Bind data
-        $statement->bindParam(':id', $this->id);
+        $statement->bindParam(':tid', $this->tid);
         $statement->bindParam(':gid', $this->gid);
-        $statement->bindParam(':tytul', $this->tytul);
+        $statement->bindParam(':uid', $this->uid);
+        $statement->bindParam(':start', $this->start);
         $statement->bindParam(':dane', $this->dane);
 
         // Execute
@@ -156,7 +190,7 @@ class Test extends Database
         return false;
     }
 
-    // Usunięcie grupy
+    // Usunięcie odpowiedzi
     public function delete()
     {
         // Query

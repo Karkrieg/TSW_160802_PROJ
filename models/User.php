@@ -71,6 +71,9 @@
 
             // Wykonanie
             if($statement->execute()){
+            
+            // Jeśli istnieje test o podanym id
+            if ($statement->rowCount()) {    
 
             $row = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -84,7 +87,7 @@
 
             return true;
             }
-
+        } 
             return false;
         }
 

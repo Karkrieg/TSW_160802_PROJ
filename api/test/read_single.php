@@ -15,30 +15,32 @@
     header('Content-Type: application/json');
 
     include_once '../../configuration/Database.php';
-    include_once '../../models/Group.php';
+    include_once '../../models/Test.php';
 
     // Instantiate DB & connect
     $database = new Database();
     $db = $database->connect();
 
-    // Instatniate group object
-    $group = new Group($db);
+    // Instatniate test object
+    $test = new test($db);
 
     // Get id
-    $group->id = isset($_GET['id']) ? $_GET['id'] : die();
+    $test->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    // Get group
-    if($group->read_single()){
+    // Get test
+    if($test->read_single()){
 
     // Stworzenie tablicy
-    $group_arr = array(
-        'id' => $group->id,
-        'name' => $group->name
+    $test_arr = array(
+        'id' => $test->id,
+        'gid' => $test->gid,
+        'tytul' => $test->tytul,
+        'dane' => json_decode($test->dane)
     );
 
     // Stwórz JSON
-    print_r(json_encode($group_arr));
+    print_r(json_encode($test_arr));
     }
     else {
-        print_r(json_encode(array("message" => "Nie udało się wczytać użytkownika")));
+        print_r(json_encode(array("message" => "Nie udało się wczytać testu")));
     }

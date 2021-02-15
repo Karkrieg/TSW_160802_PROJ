@@ -330,8 +330,10 @@ if ($_SESSION['uGroup'] > 2) {
                             content += '<option value="' + row.id + '">' + row.name + '</option>';
                         }
                     });
-                    $('#opt-group').html(content);
-                    $('#opt-group2').html(content);
+                    $('#opt-group').html('<option value="" selected>Wybierz grupę</option>');
+                    $('#opt-group').append(content);
+                    $('#opt-group2').html('<option value="" selected>Wybierz grupę</option>');
+                    $('#opt-group2').append(content);
                 },
                 error: function(xhr, status, err) {
                     console.log(xhr, status, err);
